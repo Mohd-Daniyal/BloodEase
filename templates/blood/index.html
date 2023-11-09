@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+
+<head>
+    <style>
+      .xyz {
+        margin-bottom: 0px;
+        background-image: url('{% static "image/homepage.png" %}');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        height: 100vh;
+        position: relative;
+      }
+      .transparent-section {
+        background-color: rgba(255, 255, 255, 0.5);
+        position: absolute;
+        top: 80%; 
+        left: 0%; 
+        right: 0%; 
+        bottom: 0%; 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    </style>
+</head>
+
+<body>
+  {% include "blood/navbar.html" %}
+<br>
+<section id="section-jumbotron" style="margin-bottom: 0px;" class="jumbotron jumbotron-fluid d-flex justify-content-center align-items-center xyz">
+    <div class="container text-center">
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      <br><br><br><br>
+    </div>  
+  </section>
+
+  <div class="transparent-section">
+    <p class="lead text-center">“A Few Minutes of Your Time, a Lifetime for Someone Else.”</p>
+  </div>
+  {% include "blood/footer.html" %}
+</body>
+</html>

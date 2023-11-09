@@ -1,0 +1,76 @@
+{% extends 'donor/donorbase.html' %}
+{% block content %}
+<head>
+  <style>
+    h4 {
+      font-size: 24px;
+      font-family:verdana;
+      text-align: center;
+      color: #333;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<br><br>
+<div class="container">
+  <h4>Welcome, {{ username }}! <br>Your Lifesaving Generosity Matters. Thank You! 🩸</h4>
+    <br>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="card border-danger">
+          <div class="card-body">
+              <div class="blood">
+                <i class="fas fa-sync-alt xyz"></i>
+              </div><br>
+              <div>
+                Donations Made <br>
+                  {{requestmade}}
+              </div>                            
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="card border-danger">
+            <div class="card-body">
+                <div class="blood">
+                  <i class="fas fa-clock xyz"></i>
+                </div><br>
+                <div>
+                    Pending Approvals<br>
+                    {{requestpending}}
+                </div>                            
+            </div>
+          </div>
+      </div>
+
+      <div class="col-sm-3">
+          <div class="card border-danger">
+              <div class="card-body">
+                  <div class="blood">
+                    <i class="fas fa-check-circle xyz"></i>
+                  </div><br>
+                  <div>
+                       Approved Donations<br>
+                      {{requestapproved}}
+                  </div>                            
+              </div>
+            </div>
+      </div>
+      <div class="col-sm-3">
+          <div class="card border-danger">
+              <div class="card-body">
+                  <div class="blood">
+                    <i class="fas fa-times-circle xyz"></i>
+                  </div><br>
+                  <div>
+                       Rejected Donations <br>
+                      {{requestrejected}}
+                  </div>                            
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
