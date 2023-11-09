@@ -1,30 +1,31 @@
-BloodEase 🅰️🆎🅱️🅾️
+## BloodEase 🅰️🆎🅱️🅾️
+  A Blood Bank Portal.
 
 ## Screenshots
 
 ### Homepage
 
-![Homepage] ![Screenshot 2023-11-08 231423](https://github.com/Mohd-Daniyal/BloodEase/assets/96229438/f6fcddbd-9cdd-435d-a0d8-492d60097266)
+ ![Screenshot 2023-11-08 231423](https://github.com/Mohd-Daniyal/BloodEase/assets/96229438/f6fcddbd-9cdd-435d-a0d8-492d60097266)
 
 
 ### Admin Dashboard
 
-![Admin Dashboard] ![Screenshot 2023-11-08 231404](https://github.com/Mohd-Daniyal/BloodEase/assets/96229438/5e8ede8b-3cf6-4045-94b6-dd6e7bfe5e1f)
+ ![Screenshot 2023-11-08 231404](https://github.com/Mohd-Daniyal/BloodEase/assets/96229438/5e8ede8b-3cf6-4045-94b6-dd6e7bfe5e1f)
 
 
 ### Blood Donation
 
-![Blood Donation] ![Screenshot 2023-11-08 235615](https://github.com/Mohd-Daniyal/BloodEase/assets/96229438/f289f178-1b34-4ff6-ae1b-60a8ca07763f)
+ ![Screenshot 2023-11-08 235615](https://github.com/Mohd-Daniyal/BloodEase/assets/96229438/f289f178-1b34-4ff6-ae1b-60a8ca07763f)
 
 
 ### Blood Request
 
-![Blood Request] ![Screenshot 2023-11-08 222610](https://github.com/Mohd-Daniyal/BloodEase/assets/96229438/04a32f77-3b23-4f21-85c0-12b3241433e1)
+ ![Screenshot 2023-11-08 222610](https://github.com/Mohd-Daniyal/BloodEase/assets/96229438/04a32f77-3b23-4f21-85c0-12b3241433e1)
 
 
 ### User Details
 
-![User] ![Screenshot 2023-11-09 172226](https://github.com/Mohd-Daniyal/BloodEase/assets/96229438/e349e6fa-9fe3-43ac-ae7e-b92c2769f391)
+ ![Screenshot 2023-11-09 172226](https://github.com/Mohd-Daniyal/BloodEase/assets/96229438/e349e6fa-9fe3-43ac-ae7e-b92c2769f391)
 
 
 ## Functions
