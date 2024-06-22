@@ -5,27 +5,27 @@
 
 ### Homepage
 
- ![Screenshot 2023-11-08 231423](https://github.com/Mohd-Daniyal/BloodEase/assets/96229438/f6fcddbd-9cdd-435d-a0d8-492d60097266)
+ ![Screenshot 2024-06-15 145436](https://github.com/Mohd-Daniyal/BloodEase/assets/96229438/19701e65-7c1c-4e58-ab22-a8ac5c0fc7a8)
 
 
 ### Admin Dashboard
 
- ![Screenshot 2023-11-08 231404](https://github.com/Mohd-Daniyal/BloodEase/assets/96229438/5e8ede8b-3cf6-4045-94b6-dd6e7bfe5e1f)
+ ![Screenshot 2024-06-21 110741](https://github.com/Mohd-Daniyal/BloodEase/assets/96229438/2f7187ea-46b6-4c41-83bc-8d78174ba7d3)
 
 
-### Blood Donation
-
- ![Screenshot 2023-11-08 235615](https://github.com/Mohd-Daniyal/BloodEase/assets/96229438/f289f178-1b34-4ff6-ae1b-60a8ca07763f)
+### Patient Dashboard
+ 
+![Screenshot 2024-06-22 201425](https://github.com/Mohd-Daniyal/BloodEase/assets/96229438/94f306a8-8890-4a29-89c1-a6f6fc583d50)
 
 
 ### Blood Request
 
- ![Screenshot 2023-11-08 222610](https://github.com/Mohd-Daniyal/BloodEase/assets/96229438/04a32f77-3b23-4f21-85c0-12b3241433e1)
+ ![Screenshot 2024-06-22 201657](https://github.com/Mohd-Daniyal/BloodEase/assets/96229438/7dba6492-be0d-41ad-8fb4-ef1a38c9c5b6)
 
 
 ### User Details
 
- ![Screenshot 2023-11-09 172226](https://github.com/Mohd-Daniyal/BloodEase/assets/96229438/e349e6fa-9fe3-43ac-ae7e-b92c2769f391)
+ ![Screenshot 2024-06-21 112145](https://github.com/Mohd-Daniyal/BloodEase/assets/96229438/19143079-f7cc-459c-982b-d2c24d67025c)
 
 
 ## Functions
@@ -67,9 +67,10 @@
 
 ```bash
 python -m pip install -r requirements.txt
-py manage.py makemigrations
-py manage.py migrate
-py manage.py runserver
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+python manage.py tailwind start
 ```
 
 - Access the project in your web browser by entering the following URL:
