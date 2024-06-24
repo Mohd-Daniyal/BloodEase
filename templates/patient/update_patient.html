@@ -1,0 +1,83 @@
+{% extends 'patient/patientbase.html' %}
+{% load static tailwind_tags %}
+{% block content %}
+{% load widget_tweaks %}
+{% load static %}
+
+<head>
+    {% tailwind_css %}
+</head>
+
+<div class="page-wrapper p-t-20 p-b-50 min-h-screen">
+    <div class="max-w-lg mx-auto">
+        <div class="bg-gray-50 shadow-md rounded-lg p-8">
+            <h2 class="text-2xl font-bold text-center text-gray-900 mb-6">Edit Your Details</h2>
+            <form method="POST" enctype="multipart/form-data" class="space-y-4">
+                {% csrf_token %}
+                
+                {% if patient_form.instance.profile_pic %}
+                <div class="mb-5 text-center">
+                    <img src="{% static profilePic.url %}" alt="Profile Picture" class="rounded-full w-32 h-32 mx-auto">
+                </div>
+                {% endif %}
+
+                <div class="mb-5">
+                    <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900">First Name</label>
+                    <div class="input-group">
+                        {% render_field user_form.first_name class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
+                    </div>
+                </div>
+                
+                <div class="mb-5">
+                    <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900">Last Name</label>
+                    <div class="input-group">
+                        {% render_field user_form.last_name class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
+                    </div>
+                </div>
+                
+                <div class="mb-5">
+                    <label for="bloodgroup" class="block mb-2 text-sm font-medium text-gray-900">Blood Group</label>
+                    <div class="input-group">
+                        <select name="bloodgroup" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                            <option disabled="disabled" selected="selected">Choose option</option>
+                            <option value="O+" {% if patient_form.bloodgroup.value == 'O+' %}selected{% endif %}>O+</option>
+                            <option value="O-" {% if patient_form.bloodgroup.value == 'O-' %}selected{% endif %}>O-</option>
+                            <option value="A+" {% if patient_form.bloodgroup.value == 'A+' %}selected{% endif %}>A+</option>
+                            <option value="A-" {% if patient_form.bloodgroup.value == 'A-' %}selected{% endif %}>A-</option>
+                            <option value="B+" {% if patient_form.bloodgroup.value == 'B+' %}selected{% endif %}>B+</option>
+                            <option value="B-" {% if patient_form.bloodgroup.value == 'B-' %}selected{% endif %}>B-</option>
+                            <option value="AB+" {% if patient_form.bloodgroup.value == 'AB+' %}selected{% endif %}>AB+</option>
+                            <option value="AB-" {% if patient_form.bloodgroup.value == 'AB-' %}selected{% endif %}>AB-</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="mb-5">
+                    <label for="address" class="block mb-2 text-sm font-medium text-gray-900">Address</label>
+                    <div class="input-group">
+                        {% render_field patient_form.address class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
+                    </div>
+                </div>
+                
+                <div class="mb-5">
+                    <label for="mobile" class="block mb-2 text-sm font-medium text-gray-900">Mobile</label>
+                    <div class="input-group">
+                        {% render_field patient_form.mobile class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
+                    </div>
+                </div>
+                
+                <div class="mb-5">
+                    <label for="profile_pic" class="block mb-2 text-sm font-medium text-gray-900">Profile Picture</label>
+                    <div class="input-group">
+                        {% render_field patient_form.profile_pic class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
+                    </div>
+                </div>
+
+                <button type="submit" class="text-white bg-rose-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                    Update
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

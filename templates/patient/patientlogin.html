@@ -1,66 +1,52 @@
-{%load static%}
+{% load static tailwind_tags %}
 {% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css">
- 
-    <!-- Font special for pages-->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
-
-    <!-- Main CSS-->
-    <link href="{% static "css/main.css" %}"rel="stylesheet" media="all">
-  </head>
-  <body>
+<head>
+    {% tailwind_css %}
+</head>
+<body>
     {% include "blood/navbar.html" %}
 
-    <div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
-        <div class="wrapper wrapper--w790">
-            <br><br><br>
-            <div class="card card-5">
-                <div class="card-heading">
-                    <h2 class="title">Patient Login</h2>
-                </div>
-                <div class="card-body">
-                    <form method="POST">
-                        {% csrf_token %}
-                        <div class="form-row">
-                            <div class="name">Username</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    {% render_field form.username class="input--style-5"%}
+    <div class="flex h-screen items-center justify-center p-10">
+        <div class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                <h2 class="text-center font-extrabold uppercase text-rose-500">Patient Login</h2>
 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="name">Password</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    {% render_field form.password class="input--style-5" %}
-                                </div>
-                            </div>
-                        </div>
-
+                {% if form.errors %}
+                    <div class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
+                        <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                        </svg>
+                        <span class="sr-only">Info</span>
                         <div>
-                            <button class="btn btn--radius-2 btn-danger" type="submit">Login</button>
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                {{ error }}
+                            {% endfor %}
+                        {% endfor %}
                         </div>
-                    </form>
-                    <br>
-                    <p style="text-align: center;">Do not have an account ? <a style="text-decoration: none;" href="/patient/patientsignup">Click here to register</a></p>
-
-                </div>
+                    </div>
+                {% endif %}
+                <form class="space-y-4 md:space-y-6" method="POST">
+                    {% csrf_token %}
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-rose-500" for="{{ form.username.id_for_label }}">Username</label>
+                        {% render_field form.username class="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:border-rose-500 block w-full p-2.5" %}
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-rose-500" for="{{ form.password.id_for_label }}">Password</label>
+                        {% render_field form.password class="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:border-rose-500 block w-full p-2.5" %}
+                    </div>
+                    <div>
+                        <button class="mb-3 w-full rounded-2xl bg-rose-500 px-5 py-3 font-semibold text-white" type="submit">Login</button>
+                    </div>
+                </form>
+                <p class="text-sm font-light text-gray-500">Do not have an account? <a class="font-medium text-rose-500 hover:underline" href="/patient/patientsignup">Click here to register</a></p>
             </div>
         </div>
     </div>
 
-{% include "blood/footer.html" %}
-<!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  </body>
+    {% include "blood/footer.html" %}
+</body>
 </html>

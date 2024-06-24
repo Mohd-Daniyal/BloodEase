@@ -28,3 +28,5 @@ class BloodDonate(models.Model):
 
     def __str__(self):
         return f"{str(self.donor)} - {str(self.date)}"
+    
+User._meta.get_field('email')._unique = True

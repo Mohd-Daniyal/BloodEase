@@ -1,139 +1,109 @@
-{%load static%}
+{% load static %}
 {% load widget_tweaks %}
+{% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-      
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css">
- 
-    <!-- Font special for pages-->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
-
-    <!-- Main CSS-->
-
-    <link href="{% static "css/main.css" %}"rel="stylesheet" media="all">
-    <style>
-
-    </style>
-  </head>
-  <body>
+<head>
+    {% tailwind_css %}
+</head>
+<body>
     {% include "blood/navbar.html" %}
-    <div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
-        <div class="wrapper wrapper--w790">
-            <br><br><br>
-            <div class="card card-5">
-                <div class="card-heading">
-                    <h2 class="title">Patient Signup</h2>
-                </div>
-                <div class="card-body">
-                    <form method="POST" autocomplete="off" enctype="multipart/form-data">
-                        {% csrf_token %}
-
-                        <div class="form-row">
-                            <div class="name">First Name</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    {% render_field userForm.first_name|attr:'required:true'  class="input--style-5"  %}
-                                </div>
+    <div class="page-wrapper p-t-20 p-b-50 min-h-screen">
+        <div class="flex items-center justify-center">
+            <div class="shadow-lg rounded-lg bg-white p-8 max-w-3xl w-full m-20">
+                <h2 class="text-2xl font-bold text-center text-gray-900 mb-6">Patient Signup</h2>
+                {% for message in messages %}
+                    <p class="text-red-600">{{ message }}</p>
+                {% endfor %}
+                <form method="POST" autocomplete="off" enctype="multipart/form-data" class="space-y-4">
+                    {% csrf_token %}
+                    
+                    <div class="flex space-x-4">
+                        <div class="flex-1">
+                            <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900">First Name</label>
+                            <div class="input-group">
+                                {% render_field userForm.first_name|attr:'required:true' class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
                             </div>
                         </div>
 
-                        <div class="form-row">
-                            <div class="name">Last Name</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    {% render_field userForm.last_name|attr:'required:true'  class="input--style-5"  %}
-                                </div>
+                        <div class="flex-1">
+                            <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900">Last Name</label>
+                            <div class="input-group">
+                                {% render_field userForm.last_name|attr:'required:true' class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
+                        <div class="input-group">
+                            {% render_field userForm.email|attr:'required:true' class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
+                        </div>
+                    </div>
+
+                    <div class="flex space-x-4">
+                        <div class="flex-1">
+                            <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Username</label>
+                            <div class="input-group">
+                                {% render_field userForm.username|attr:'required:true' class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
                             </div>
                         </div>
 
-                        <div class="form-row">
-                            <div class="name">Username</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    {% render_field userForm.username|attr:'required:true'  class="input--style-5"  %}
-                                </div>
+                        <div class="flex-1">
+                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
+                            <div class="input-group">
+                                {% render_field userForm.password|attr:'required:true' class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
                             </div>
                         </div>
-  
-                        <div class="form-row">
-                            <div class="name">Password</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    {% render_field userForm.password|attr:'required:true'  class="input--style-5"  %}
-                                </div>
+                    </div>
+
+                    <div class="flex space-x-4">
+                        <div class="flex-1">
+                            <label for="bloodgroup" class="block mb-2 text-sm font-medium text-gray-900">Blood Group</label>
+                            <div class="input-group">
+                                <select name="bloodgroup" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                    <option disabled="disabled" selected="selected">Choose option</option>
+                                    <option>O+</option>
+                                    <option>O-</option>
+                                    <option>A+</option>
+                                    <option>A-</option>
+                                    <option>B+</option>
+                                    <option>B-</option>
+                                    <option>AB+</option>
+                                    <option>AB-</option>
+                                </select>
                             </div>
                         </div>
 
-                        <div class="form-row">
-                            <div class="name">Blood Group</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    <div class="rs-select2 js-select-simple select--no-search">
-                                        <select name="bloodgroup">
-                                            <option disabled="disabled" selected="selected">Choose option</option>
-                                            <option>O+</option>
-                                            <option>O-</option>
-                                            <option>A+</option>
-                                            <option>A-</option>
-                                            <option>B+</option>
-                                            <option>B-</option>
-                                            <option>AB+</option>
-                                            <option>AB-</option>
-                                        </select>
-                                        <div class="select-dropdown"></div>
-                                    </div>
-                                </div>
+                        <div class="flex-1">
+                            <label for="mobile" class="block mb-2 text-sm font-medium text-gray-900">Mobile</label>
+                            <div class="input-group">
+                                {% render_field patientForm.mobile|attr:'required:true' class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
                             </div>
                         </div>
-                        
-                        <div class="form-row">
-                            <div class="name">Address</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    {% render_field patientForm.address|attr:'required:true'  class="input--style-5"  %}
-                                </div>
-                            </div>
-                        </div>
+                    </div>
 
-                        <div class="form-row">
-                            <div class="name">Mobile</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    {% render_field patientForm.mobile|attr:'required:true'  class="input--style-5"  %}
-                                </div>
-                            </div>
+                    <div class="mb-4">
+                        <label for="address" class="block mb-2 text-sm font-medium text-gray-900">Address</label>
+                        <div class="input-group">
+                            {% render_field patientForm.address|attr:'required:true' class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
                         </div>
+                    </div>
 
-                        <div class="form-row">
-                            <div class="name">Profile Pic</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    {% render_field patientForm.profile_pic|attr:'required:true'  class="input--style-5"  %}
-                                </div>
-                            </div>
+                    <div class="mb-4">
+                        <label for="profile_pic" class="block mb-2 text-sm font-medium text-gray-900">Profile Picture</label>
+                        <div class="input-group">
+                            {% render_field patientForm.profile_pic|attr:'required:true' class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
                         </div>
-
-                        <div>
-                            <button class="btn btn--radius-2 btn-danger" type="submit">Register</button>
-                        </div>
-                    </form>
-                    <br>
-                    <p style="text-align: center;">Already have an account ? <a style="text-decoration: none;" href="/patient/patientlogin">Click here to login</a></p>
-
-                </div>
+                    </div>
+                    <button class="w-full text-white bg-rose-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="submit">Register</button>
+                </form>
+                <br>
+                <p class="text-center">Already have an account? <a class="text-rose-500 hover:underline" href="/patient/patientlogin">Click here to login</a></p>
             </div>
+           
         </div>
     </div>
-
-{% include "blood/footer.html" %}
-<!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-  </body>
+    {% include "blood/footer.html" %}
+</body>
 </html>

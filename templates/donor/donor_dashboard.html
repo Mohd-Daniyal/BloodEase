@@ -1,76 +1,61 @@
 {% extends 'donor/donorbase.html' %}
+{% load static tailwind_tags %}
 {% block content %}
 <head>
-  <style>
-    h4 {
-      font-size: 24px;
-      font-family:verdana;
-      text-align: center;
-      color: #333;
-      margin: 20px 0;
-    }
-  </style>
+  {% tailwind_css %}
 </head>
 <br><br>
-<div class="container">
-  <h4>Welcome, {{ username }}! <br>Your Lifesaving Generosity Matters. Thank You! 🩸</h4>
-    <br>
-    <div class="row">
-      <div class="col-sm-3">
-        <div class="card border-danger">
-          <div class="card-body">
-              <div class="blood">
-                <i class="fas fa-sync-alt xyz"></i>
-              </div><br>
-              <div>
-                Donations Made <br>
-                  {{requestmade}}
-              </div>                            
-          </div>
-        </div>
-      </div>
+<div class="container mx-auto px-4">
+  <h4 class="text-xl md:text-2xl pl-2 my-2 border-l-4 font-sans font-bold border-rose-500 text-gray-800">Welcome, {{ username }}! <br>Your Lifesaving Generosity Matters. Thank You! </h4>
+  <br>
 
-      <div class="col-sm-3">
-        <div class="card border-danger">
-            <div class="card-body">
-                <div class="blood">
-                  <i class="fas fa-clock xyz"></i>
-                </div><br>
-                <div>
-                    Pending Approvals<br>
-                    {{requestpending}}
-                </div>                            
-            </div>
-          </div>
+  <div class="grid mt-5 shadow-lg shadow-gray-200 rounded-2xl md:mb-12 md:grid-cols-4 bg-gray-50">
+    <figure class="flex p-8 text-center border-gray-300 md:rounded-t-none md:rounded-ss-lg md:border-e">
+      <i class="fas fa-sync-alt text-rose-500 text-2xl mr-4"></i>
+      <div class="flex flex-col items-center justify-center w-full">
+        <h3 class="text-xl font-extrabold text-gray-700">{{ requestmade }}</h3>
+        <p class="my-4">Requests Made</p>
       </div>
+    </figure>
+    <figure class="flex p-8 text-center border-t md:border-t-0 border-gray-300 md:border-e">
+      <i class="fas fa-clock text-rose-500 text-2xl mr-4"></i>
+      <div class="flex flex-col items-center justify-center w-full">
+        <h3 class="text-xl font-extrabold text-gray-700">{{ requestpending }}</h3>
+        <p class="my-4">Pending Requests</p>
+      </div>
+    </figure>
+    <figure class="flex p-8 text-center border-t md:border-t-0 border-gray-300 md:border-e">
+      <i class="fas fa-check-circle text-rose-500 text-2xl mr-4"></i>
+      <div class="flex flex-col items-center justify-center w-full">
+        <h3 class="text-xl font-extrabold text-gray-700">{{ requestapproved }}</h3>
+        <p class="my-4">Approved Requests</p>
+      </div>
+    </figure>
+    <figure class="flex p-8 text-center border-t md:border-t-0 border-gray-300 rounded-b-lg md:rounded-se-lg">
+      <i class="fas fa-times-circle text-rose-500 text-2xl mr-4"></i>
+      <div class="flex flex-col items-center justify-center w-full">
+        <h3 class="text-xl font-extrabold text-gray-700">{{ requestrejected }}</h3>
+        <p class="my-4">Rejected Requests</p>
+      </div>
+    </figure>
+  </div>  
 
-      <div class="col-sm-3">
-          <div class="card border-danger">
-              <div class="card-body">
-                  <div class="blood">
-                    <i class="fas fa-check-circle xyz"></i>
-                  </div><br>
-                  <div>
-                       Approved Donations<br>
-                      {{requestapproved}}
-                  </div>                            
-              </div>
-            </div>
-      </div>
-      <div class="col-sm-3">
-          <div class="card border-danger">
-              <div class="card-body">
-                  <div class="blood">
-                    <i class="fas fa-times-circle xyz"></i>
-                  </div><br>
-                  <div>
-                       Rejected Donations <br>
-                      {{requestrejected}}
-                  </div>                            
-              </div>
-            </div>
-        </div>
+  <div class="text-left text-md py-10 lg:px-4">
+    <div class="items-center text-violet-800 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+      <span class="flex rounded-full uppercase px-2 py-1 font-bold mr-3"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+      <span class="mr-2 text-left flex-auto">Stay hydrated and eat a healthy meal before your donation. Your well-being is important to us!</span>
+      <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
     </div>
-</div>
+    <div class=" items-center text-violet-800 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+      <span class="flex rounded-full uppercase px-2 py-1 font-bold mr-3"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+      <span class="mr-2 text-left flex-auto">Keep the bandage on and dry for several hours to prevent bruising.</span>
+      <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
+    </div>
+    <div class="items-center text-violet-800 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+      <span class="flex rounded-full uppercase px-2 py-1 font-bold mr-3"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+      <span class="mr-2 text-left flex-auto">Inform the staff immediately if you feel unwell or dizzy at any point.</span>
+      <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
+    </div>
+  </div>
 
 {% endblock content %}

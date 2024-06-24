@@ -29,6 +29,9 @@
                     <h2 class="title">Donor Signup</h2>
                 </div>
                 <div class="card-body">
+                    {% for message in messages %}
+                    <p class="text-danger">{{ message }}</p>
+                    {% endfor %}
                     <form method="POST" autocomplete="off" enctype="multipart/form-data">
                         {% csrf_token %}
 
@@ -58,7 +61,16 @@
                                 </div>
                             </div>
                         </div>
-  
+                        
+                        <div class="form-row">
+                            <div class="name">Email</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    {% render_field userForm.email|attr:'required:true'  class="input--style-5"  %}
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-row">
                             <div class="name">Password</div>
                             <div class="value">
@@ -67,6 +79,7 @@
                                 </div>
                             </div>
                         </div>
+
 
                         <div class="form-row">
                             <div class="name">Blood Group</div>

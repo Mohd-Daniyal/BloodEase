@@ -1,60 +1,77 @@
 {% extends 'blood/adminbase.html' %}
 {% block content %}
+{% load static tailwind_tags %}
 {% load widget_tweaks %}
 {%load static%}
 <head>
- <style>
-     .label {
-  color: white;
-  padding: 8px;
-}
-.success {background-color: #4CAF50;} /* Green */
-.info {background-color: #2196F3;} /* Blue */
-.warning {background-color: #ff9800;} /* Orange */
-.danger {background-color: #f44336;} /* Red */
-.other {background-color: #e7e7e7; color: black;} /* Gray */
- </style>
+    {% tailwind_css %}
 </head>
-<br><br>
 <div class="container">
-    <H4 class="text-center" style="font-family:verdana;">Blood Request History</H4><br>
-    {% if message %}
-   <h5 class="text-center" style="color: red;"> {{message}}</h5><br>
-{% else %}
-
-{% endif %}
-    <table class="table table-light table-hover table-bordered table-striped">
-        <thead class="bg-dark" style="color:white;">
-            <tr>
-                <th scope="col">Patient Name</th>
-                <th scope="col">Age</th>
-                <th scope="col">Reason</th>
-                <th scope="col">Blood Group</th>
-                <th scope="col">Unit (in ml)</th>
-                <th scope="col">Date</th>
-                <th scope="col">Status</th>
-                <th scope="col">Stock Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for t in requests %}
-            <tr>
-                <td> {{t.patient_name}}</td>
-                <td>{{t.patient_age}}</td>
-                <td>{{t.reason}}</td>
-                <td>{{t.bloodgroup}}</td>
-                <td>{{t.unit}}</td>
-                <td>{{t.date}}</td>
-                {% if t.status == 'Approved' %}
-                <td><span class="label success"> Approved</span></td>
-                <td> {{t.unit}} Unit Deducted From Stock</span></td>
-                {% else %}
-                <td><span class="label danger">Rejected</span></td>
-                <td> 0 Unit Deducted From Stock</span></td>
-                {% endif %}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<h4 class="text-xl font-bold text-center text-gray-900 m-6">Past Requests</h4>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-5">
+        <table class="w-full text-sm text-center rtl:text-right text-gray-900">
+            <thead class="text-xs text-gray-700 uppercase bg-violet-200">
+                <tr>
+                    <th scope="col" class="px-5 py-3">
+                        Patient Name
+                    </th>
+                    <th scope="col" class="px-5 py-3">
+                        Age
+                    </th>
+                    <th scope="col" class="px-5 py-3">
+                        Reason
+                    </th>
+                    <th scope="col" class="px-5 py-3">
+                        Blood Group
+                    </th>
+                    <th scope="col" class="px-5 py-3">
+                        Unit (ml)
+                    </th>
+                    <th scope="col" class="px-5 py-3">
+                        Date
+                    </th>
+                    <th scope="col" class="px-5 py-3">
+                        Status
+                    </th>
+                    <th scope="col" class="px-5 py-3">
+                        Stock Status
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in requests %}
+                <tr class="bg-white border-b hover:bg-gray-100">
+                    <td class="px-5 py-4">
+                        {{t.patient_name}}
+                    </td>
+                    <td class="px-5 py-4">
+                        {{t.patient_age}}
+                    </td>
+                    <td class="px-5 py-4">
+                        {{t.reason}}
+                    </td>
+                    <td class="px-5 py-4">
+                        {{t.bloodgroup}}
+                    </td>
+                    <td class="px-5 py-4">
+                        {{t.unit}}
+                    </td>
+                    <td class="px-5 py-4">
+                        {{t.date}}
+                    </td>
+                        {% if t.status == 'Approved' %}
+                            <td><span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">Approved</span></td>
+                            <td> {{t.unit}} Unit Deducted From Stock</span></td>
+                        {% else %}
+                            <td><span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">Rejected</span></td>
+                            <td> 0 Unit Deducted From Stock</span></td>
+                        {% endif %}
+                    </tr>                    
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
+
 {% endblock content %}
+

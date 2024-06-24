@@ -1,15 +1,10 @@
 from django.shortcuts import render,redirect,reverse
 from . import forms,models
-from django.db.models import Sum,Q
 from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
-from django.contrib.auth.decorators import login_required,user_passes_test
 from django.conf import settings
-from datetime import date, timedelta
-from django.core.mail import send_mail
+from django.contrib import messages
 from django.contrib.auth.models import User
-from blood import forms as bforms
-from blood import models as bmodels
 
 def donor_signup_view(request):
     userForm=forms.DonorUserForm()
@@ -28,7 +23,16 @@ def donor_signup_view(request):
             donor.save()
             my_donor_group = Group.objects.get_or_create(name='DONOR')
             my_donor_group[0].user_set.add(user)
-        return HttpResponseRedirect('donorlogin')
+            return HttpResponseRedirect('donorlogin')
+        else:
+            for field, errors in userForm.errors.items():
+                for error in errors:
+                    messages.error(request, f"*{field} {error}")
+            
+            for field, errors in donorForm.errors.items():
+                for error in errors:
+                    messages.error(request, f"*{field}: {error}")
+
     return render(request,'donor/donorsignup.html',context=mydict)
 
 def donor_dashboard_view(request):
@@ -48,7 +52,7 @@ def donate_blood_view(request):
         donation_form=forms.DonationForm(request.POST)
         if donation_form.is_valid():
             blood_donate=donation_form.save(commit=False)
-            donor= models.Donor.objects.get(user_id=request.user.id)
+            donor=models.Donor.objects.get(user_id=request.user.id)
             blood_donate.donor=donor
             blood_donate.bloodgroup=donor.bloodgroup
             blood_donate.save()

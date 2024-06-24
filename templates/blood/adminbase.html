@@ -1,58 +1,74 @@
 {% load static %}
-
+{% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ADMIN</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
+    {% tailwind_css %}
 </head>
 <body>
-
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-danger">
-        <img src="{% static "image/logo.png" %}" width="200" alt="company logo">
-        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" style="color: white;" href="/logout">Logout &nbsp; <i class="fas fa-sign-out-alt"></i></a>
+    <nav class="bg-white border-gray-200 fixed top-0 w-full shadow-lg z-50 flex items-center justify-between p-4">
+        <img src="{% static 'image/logo-color.png' %}" alt="company logo" class="h-12 ml-5">
+        
+        <div>
+            <ul class="flex space-x-4">
+                <li>
+                    <a class="text-black text-semibold flex items-center hover:text-rose-500" href="/logout">
+                        Logout &nbsp; <i class="fas fa-sign-out-alt"></i>
+                    </a>
                 </li>
-                
             </ul>
         </div>
-      </nav>
-<br><br>
-<div class="wrapper">
-    <div class="sidebar">
-        
-        <ul>
-            <li><a style="text-decoration:none;" href="/"><i class="fas fa-home"></i>Home</a></li>
-            <li><a style="text-decoration:none;" href="/admin-donor"><i class="fas fa-user"></i>Donor</a></li>
-            <li><a style="text-decoration:none;" href="/admin-patient"><i class="fas fa-user-injured"></i>Patient</a></li>
-            <li><a style="text-decoration:none;" href="/admin-donation"><i class="fas fa-hand-holding-medical"></i>Donations</a></li>
-            <li><a style="text-decoration:none;" href="/admin-request"><i class="fas fa-sync-alt"></i>Blood Requests</a></li>
-            <li><a style="text-decoration:none;" href="/admin-request-history"><i class="fas fa-history"></i>Request History</a></li>
-            <li><a style="text-decoration:none;" href="/admin-blood"><i class="fas fa-hand-holding-water"></i>Blood Stock</a></li>
-           
-        </ul> 
-
+    </nav>
+    <div>
+        <div class="flex min-h-screen mt-20">
+            <div class="w-1/6 bg-gray-300 p-4">
+                <ul class="space-y-4">
+                    <li>
+                        <a href="/" class="flex items-center text-gray-800 p-2 hover:bg-gray-100 rounded-lg p-2 {% if request.path == '/admin-dashboard' %}bg-gray-100{% endif %}">
+                            <i class="fas fa-home mr-2"></i>Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin-donor" class="flex items-center text-gray-800 hover:bg-gray-100 rounded-lg p-2 {% if request.path == '/admin-donor' %}bg-gray-100{% endif %}">
+                            <i class="fas fa-user mr-2"></i>Donor
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin-patient" class="flex items-center text-gray-800 hover:bg-gray-100 rounded-lg p-2 {% if request.path == '/admin-patient' %}bg-gray-100{% endif %}">
+                            <i class="fas fa-user-injured mr-2"></i>Patient
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin-donation" class="flex items-center text-gray-800 hover:bg-gray-100 rounded-lg p-2 {% if request.path == '/admin-donation' %}bg-gray-100{% endif %}">
+                            <i class="fas fa-hand-holding-medical mr-2"></i>Donations
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin-request" class="flex items-center text-gray-800 hover:bg-gray-100 rounded-lg p-2 {% if request.path == '/admin-request' %}bg-gray-100{% endif %}">
+                            <i class="fas fa-sync-alt mr-2"></i>Blood Requests
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin-request-history" class="flex items-center text-gray-800 hover:bg-gray-100 rounded-lg p-2 {% if request.path == '/admin-request-history' %}bg-gray-100{% endif %}">
+                            <i class="fas fa-history mr-2"></i>Request History
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin-blood" class="flex items-center text-gray-800 hover:bg-gray-100 rounded-lg p-2 {% if request.path == '/admin-blood' %}bg-gray-100{% endif %}">
+                            <i class="fas fa-hand-holding-water mr-2"></i>Blood Stock
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="main_content flex-grow justify-center">
+                {% block content %}
+                {% endblock content %}
+            </div>
+        </div>
     </div>
-    <div class="main_content">
-
-{% block content %}
-
-{% endblock content %}
-
-    </div>
-</div>
-
-<!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
 </body>
 </html>

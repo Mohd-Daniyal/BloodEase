@@ -3,7 +3,7 @@ from . import forms,models
 from django.db.models import Sum,Q
 from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
-from django.contrib.auth.decorators import login_required,user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from datetime import date, timedelta
 from django.core.mail import send_mail
@@ -73,18 +73,12 @@ def afterlogin_view(request):
 def admin_dashboard_view(request):
     totalunit=models.Stock.objects.aggregate(Sum('unit'))
     dict={
-        'A1':models.Stock.objects.get(bloodgroup="A+"),
-        'A2':models.Stock.objects.get(bloodgroup="A-"),
-        'B1':models.Stock.objects.get(bloodgroup="B+"),
-        'B2':models.Stock.objects.get(bloodgroup="B-"),
-        'AB1':models.Stock.objects.get(bloodgroup="AB+"),
-        'AB2':models.Stock.objects.get(bloodgroup="AB-"),
-        'O1':models.Stock.objects.get(bloodgroup="O+"),
-        'O2':models.Stock.objects.get(bloodgroup="O-"),
+        'bloodstock':models.Stock.objects.all(),
         'totaldonors':dmodels.Donor.objects.all().count(),
         'totalbloodunit':totalunit['unit__sum'],
         'totalrequest':models.BloodRequest.objects.all().count(),
-        'totalapprovedrequest':models.BloodRequest.objects.all().filter(status='Approved').count()
+        'totalapprovedrequest':models.BloodRequest.objects.all().filter(status='Approved').count(),
+        'top_donors':dmodels.BloodDonate.objects.all().order_by('-unit')[:3]
     }
     return render(request,'blood/admin_dashboard.html',context=dict)
 
@@ -92,14 +86,7 @@ def admin_dashboard_view(request):
 def admin_blood_view(request):
     dict={
         'bloodForm':forms.BloodForm(),
-        'A1':models.Stock.objects.get(bloodgroup="A+"),
-        'A2':models.Stock.objects.get(bloodgroup="A-"),
-        'B1':models.Stock.objects.get(bloodgroup="B+"),
-        'B2':models.Stock.objects.get(bloodgroup="B-"),
-        'AB1':models.Stock.objects.get(bloodgroup="AB+"),
-        'AB2':models.Stock.objects.get(bloodgroup="AB-"),
-        'O1':models.Stock.objects.get(bloodgroup="O+"),
-        'O2':models.Stock.objects.get(bloodgroup="O-"),
+        'bloodStock':models.Stock.objects.all()
     }
     if request.method=='POST':
         bloodForm=forms.BloodForm(request.POST)
@@ -157,21 +144,20 @@ def admin_patient_view(request):
 def update_patient_view(request,pk):
     patient=pmodels.Patient.objects.get(id=pk)
     user=pmodels.User.objects.get(id=patient.user_id)
-    userForm=pforms.PatientUserForm(instance=user)
-    patientForm=pforms.PatientForm(request.FILES,instance=patient)
-    mydict={'userForm':userForm,'patientForm':patientForm}
     if request.method=='POST':
-        userForm=pforms.PatientUserForm(request.POST,instance=user)
-        patientForm=pforms.PatientForm(request.POST,request.FILES,instance=patient)
+        userForm=pforms.PatientUserUpdateForm(request.POST,instance=user)
+        patientForm=pforms.PatientUpdateForm(request.POST,request.FILES,instance=patient)
         if userForm.is_valid() and patientForm.is_valid():
-            user=userForm.save()
-            user.set_password(user.password)
-            user.save()
-            patient=patientForm.save(commit=False)
-            patient.user=user
-            patient.bloodgroup=patientForm.cleaned_data['bloodgroup']
-            patient.save()
-            return redirect('admin-patient')
+            userForm.save()
+            patientForm.save()
+    else:
+        userForm = pforms.PatientUserUpdateForm(instance=user)
+        patientForm = pforms.PatientUpdateForm(instance=patient)
+    mydict = {
+        'user_form': userForm,
+        'patient_form': patientForm,
+        'profilePic' : pmodels.Patient.objects.get(user_id=patient.user_id).profile_pic,
+    }
     return render(request,'blood/update_patient.html',context=mydict)
 
 
@@ -190,7 +176,7 @@ def admin_request_view(request):
 
 @login_required(login_url='adminlogin')
 def admin_request_history_view(request):
-    requests=models.BloodRequest.objects.all().exclude(status='Pending')
+    requests=models.BloodRequest.objects.all().order_by('-date').exclude(status='Pending')
     return render(request,'blood/admin_request_history.html',{'requests':requests})
 
 @login_required(login_url='adminlogin')

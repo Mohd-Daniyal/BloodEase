@@ -1,61 +1,82 @@
-{% extends 'blood/adminbase.html' %} 
-{% block content %} 
-{% load widget_tweaks%} 
-{%load static%} 
-<br /><br />
+{% extends 'blood/adminbase.html' %}
+{% block content %}
+{% load static tailwind_tags %}
+{% load widget_tweaks %}
+{%load static%}
+<head>
+    {% tailwind_css %}
+</head>
+<br><br>
 <div class="container">
   {% if requests %}
-  <h4 class="text-center" style="font-family: verdana">Blood Requested!</h4>
-  <br />
-  {% if message %}
-  <h5 class="text-center" style="color: red"><i>{{message}}</i></h5>
-  <br />
-  {% else %} {% endif %}
-  <table class="table table-light table-hover table-bordered table-striped">
-    <thead class="bg-dark" style="color: white">
-      <tr>
-        <th scope="col">Patient Name</th>
-        <th scope="col">Age</th>
-        <th scope="col">Reason</th>
-        <th scope="col">Blood Group</th>
-        <th scope="col">Unit (in ml)</th>
-        <th scope="col">Date</th>
-        <th scope="col">Status</th>
-        <th class="text-right">Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for t in requests %}
-      <tr>
-        <td>{{t.patient_name}}</td>
-        <td>{{t.patient_age}}</td>
-        <td>{{t.reason}}</td>
-        <td>{{t.bloodgroup}}</td>
-        <td>{{t.unit}}</td>
-        <td>{{t.date}}</td>
-        <td>{{t.status}}</td>
-        <td class="text-right">
-          <button class="btn btn-primary badge-pill" style="width: 100px">
-            <a
-              style="text-decoration: none; color: white"
-              href="{% url 'update-approve-status' t.id  %}"
-              >Approve</a
-            >
-          </button>
-          <button class="btn btn-danger badge-pill" style="width: 80px">
-            <a
-              style="text-decoration: none; color: white"
-              href="{% url 'update-reject-status' t.id  %}"
-              >Reject</a
-            >
-          </button>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  {% else %}
-  <h5><i>No Blood Requests!</i></h5>
-  {% endif %}
+    {% if message %}
+    <h5 class="text-center" style="color: red"><i>{{message}}</i></h5>
+    <br />
+    {% else %} {% endif %}
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-5">
+        <table class="w-full text-sm text-center rtl:text-right text-gray-900">
+            <thead class="text-xs text-gray-700 uppercase bg-violet-200">
+                <tr>
+                    <th scope="col" class="px-5 py-3">
+                        Patient name
+                    </th>
+                    <th scope="col" class="px-5 py-3">
+                        Age
+                    </th>
+                    <th scope="col" class="px-5 py-3">
+                        Reason
+                    </th>
+                    <th scope="col" class="px-5 py-3">
+                        Blood Group
+                    </th>
+                    <th scope="col" class="px-5 py-3">
+                        Unit
+                    </th>
+                    <th scope="col" class="px-5 py-3">
+                        Date
+                    </th>
+                    <th scope="col" class="px-5 py-3">
+                        Status
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in requests %}
+                <tr class="bg-white border-b hover:bg-gray-100">
+                    <td class="px-5 py-4">
+                        {{t.patient_name}}
+                    </td>
+                    <td class="px-5 py-4">
+                        {{t.patient_age}}
+                    </td>
+                    <td class="px-5 py-4">
+                        {{t.reason}}
+                    </td>
+                    <td class="px-5 py-4">
+                        {{t.bloodgroup}}
+                    </td>
+                    <td class="px-5 py-4">
+                        {{t.unit}}
+                    </td>
+                    <td class="px-5 py-4">
+                        {{t.date}}
+                    </td>
+                    <td class="px-5 py-4">
+                        <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-gray-200 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
+                          <a href="{% url 'update-approve-status' t.id  %}"><span class="pr-2 text-green-500"><i class="fa fa-check" aria-hidden="true"></i></span>Approve</a></button>
+                        <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-gray-200 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
+                          <a href="{% url 'update-reject-status' t.id  %}"><span class="pr-2 text-red-500"><i class="fa fa-times" aria-hidden="true"></i></span>Reject</a></button>
+                    </td>
+                  </tr>                    
+                {% endfor %}
+            </tbody>
+        </table>
+      </div>
+      {% else %}
+        <div class="flex items-center justify-center min-h-screen font-semibold text-gray-500">
+            <h5>No blood requests at the moment.</h5>
+        </div>
+      {% endif %}
 </div>
+
 {% endblock content %}

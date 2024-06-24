@@ -1,62 +1,78 @@
 {% extends 'blood/adminbase.html' %}
 {% block content %}
+{% load static tailwind_tags %}
 {% load widget_tweaks %}
 {%load static%}
 <head>
-    <style>
-        .label {
-     color: white;
-     padding: 8px;
-   }
-   .success {background-color: #4CAF50;} /* Green */
-   .info {background-color: #2196F3;} /* Blue */
-   .warning {background-color: #ff9800;} /* Orange */
-   .danger {background-color: #f44336;} /* Red */
-   .other {background-color: #e7e7e7; color: black;} /* Gray */
-    </style>
-   </head>
-<br><br>
+    {% tailwind_css %}
+</head>
 <div class="container">
-    <H4 class="text-center" style="font-family:verdana;">Blood Donation Details</H4><br>
-    <table class="table table-light table-hover table-bordered table-striped">
-        <thead class="bg-dark" style="color:white;">
-            <tr>
-                <th scope="col">Donor Name</th>
-                <th scope="col">Disease</th>
-                <th scope="col">Age</th>
-                <th scope="col">Blood Group</th>
-                <th scope="col">Unit</th>
-                <th scope="col">Request Date</th>
-                <th scope="col">Status</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for t in donations %}
-            <tr>
-                <td> {{t.donor.get_name}}</td>
-                <td> {{t.disease}}</td>
-                <td> {{t.age}}</td>
-                <td>{{t.bloodgroup}}</td>
-                <td>{{t.unit}}</td>
-                <td>{{t.date}}</td>
-                {% if t.status == 'Pending' %}
-                <td><span class="label info"> Pending</span></td>
-                <td class="text-right">
-                    <button class="btn btn-primary badge-pill" style="width: 100px;"><a  style="text-decoration: none;color: white;" href="{% url 'approve-donation' t.id  %}">APPROVE</a> </button>
-                    <button class="btn btn-danger badge-pill" style="width: 80px;"><a  style="text-decoration: none;color: white;" href="{% url 'reject-donation' t.id  %}">REJECT</a> </button>
-                </td>
-                {% elif  t.status == 'Approved' %}
-                <td><span class="label success"> Approved</span></td>
-                <td>{{t.unit}} Unit Added To Stock</span></td>
-
-                {% else %}
-                <td><span class="label danger"> Rejected</span></td>
-                <td>0 Unit Added To Stock</span></td> 
-                {% endif %}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <h4 class="text-xl font-bold text-center text-gray-900 m-6">Blood Donations</h4>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-5">
+        <table class="w-full text-sm text-center rtl:text-right text-gray-900">
+            <thead class="text-xs text-gray-700 uppercase bg-violet-200">
+                <tr>
+                    <th scope="col" class="px-5 py-3">
+                        Donor name
+                    </th>
+                    <th scope="col" class="px-5 py-3">
+                        Disease
+                    </th>
+                    <th scope="col" class="px-5 py-3">
+                        Age
+                    </th>
+                    <th scope="col" class="px-5 py-3">
+                        Blood Group
+                    </th>
+                    <th scope="col" class="px-5 py-3">
+                        Unit
+                    </th>
+                    <th scope="col" class="px-5 py-3">
+                        Request Date
+                    </th>
+                    <th scope="col" class="px-5 py-3">
+                        Status
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in donations %}
+                <tr class="bg-white border-b hover:bg-gray-100">
+                    <td class="px-5 py-4">
+                        {{t.donor.get_name}}
+                    </td>
+                    <td class="px-5 py-4">
+                        {{t.disease}}
+                    </td>
+                    <td class="px-5 py-4">
+                        {{t.age}}
+                    </td>
+                    <td class="px-5 py-4">
+                        {{t.bloodgroup}}
+                    </td>
+                    <td class="px-5 py-4">
+                        {{t.unit}}
+                    </td>
+                    <td class="px-5 py-4">
+                        {{t.date}}
+                    </td>
+                    <td class="px-5 py-4">
+                        {% if t.status == 'Approved' %}
+                            <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">Approved</span>
+                        {% elif t.status == 'Rejected' %}
+                            <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">Rejected</span>
+                        {% else %}
+                            <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-gray-200 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
+                                <a href="{% url 'approve-donation' t.id  %}"><span class="pr-2 text-green-500"><i class="fa fa-check" aria-hidden="true"></i></span>Approve</a></button>
+                            <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-gray-200 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
+                                <a href="{% url 'reject-donation' t.id  %}"><span class="pr-2 text-red-500"><i class="fa fa-times" aria-hidden="true"></i></span>Reject</a></button>
+                        {% endif %}
+                    </td>
+                    </tr>                    
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
+
 {% endblock content %}
